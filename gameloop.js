@@ -49,6 +49,7 @@ knapp.addEventListener("click", () => {
     
             console.log("Drog kort: " + card);
             console.log("Din hand: " + player.handCards)
+            console.log("Dealerns hand: " + dealer.handCards)
     }
 })
 
