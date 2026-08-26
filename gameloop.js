@@ -14,22 +14,22 @@ suits.forEach(function(suits) {
 });
 
 
-
+// Kollar vem som vinner
 function checkWin() {
     let playerScore = player.calculateScore();
     let dealerScore = dealer.calculateScore();
     if (playerScore > 21) {
-        nummerText.innerText = `Bust! (Värde: ${playerScore}) – Du förlorade!`;
+        nummerText.innerText = `Bust! (Värde: ${playerScore}) Du förlorade!`;
         nummerText.style.color = "red";
         return;
     }
-    // 3. Dealern fick över 21 (Bust)
+     
     if (dealerScore > 21) {
-        dealerText.innerText = `(Värde: ${dealerScore}) – Du vinner!`;
+        dealerText.innerText = `(Värde: ${dealerScore}) Du vinner!`;
         dealerText.style.color = "green";
         return;
     }
-    // 4. Vanliga poängjämförelser
+
     if (playerScore > dealerScore) {
         nummerText.innerText = `Du vinner! (${playerScore} mot ${dealerScore})`;
         nummerText.style.color = "green";
@@ -49,7 +49,7 @@ function drawCard(){
     let tempCard = Math.floor(Math.random() * deck.length);
     return deck.splice(tempCard, 1)[0];
 }
-// Samma dom drawCard fast för dealern
+// Samma som drawCard fast för dealern
 function getDealerhand() {
     let card = drawCard();
     if (card) {
