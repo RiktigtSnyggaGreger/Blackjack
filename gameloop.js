@@ -28,21 +28,20 @@ function getDealerhand() {
     return card;
 }
 
-// Startar med två kort i handen
+// Start kort
 player.handCards.push(drawCard());
 player.handCards.push(drawCard());
 console.log("Din hand: ", player.handCards);
 console.log("Din hand värde: ", player.calculateScore());
-
-// Startar med två kort i dealerns hand
 getDealerhand();
 getDealerhand();
 console.log("Dealerns hand: ", dealer.handCards);
 console.log("Dealerns hand värde: ", dealer.calculateScore());
 
-const knapp = document.getElementById("get-number");
 
+const knapp = document.getElementById("get-number");
 const stanna = document.getElementById("stand");
+const reset = document.getElementById("reset");
 
 document.getElementById("nummer").innerText = "Ditt kortvärde: " + player.calculateScore();
 document.getElementById("dealer").innerText = "Dealerns kortvärde: " + dealer.calculateScore();
@@ -60,24 +59,44 @@ knapp.addEventListener("click", () => {
             console.log("Din hand värde: " + player.calculateScore());
             console.log("Dealerns hand: " + dealer.handCards)
             console.log("Dealerns hand värde: " + dealer.calculateScore());
-            
+
+            if (player.calculateScore() > 21) {
+                document.getElementById("nummer").innerText = "Bust! : " + player.calculateScore();
+                document.getElementById("nummer").style.color = "red";
+                let element = document.getElementById("get-number")
+                element.disabled = true;
+            }
 
     }
 })
 
-
-
-
-
-
+// Knapp som håller koll på dealern och avslutar spealresn tur
 stanna.addEventListener("click", () => {
-    if (getDealerhand()) {
-        document.getElementById("dealer").innerText = "Dealerns kortvärde: " + dealer.calculateScore();
-        console.log("Dealerns hand: " + dealer.handCards)
-        console.log("Dealerns hand värde: " + dealer.calculateScore());
-        
+    
+    document.getElementById("dealer").innerText = "Dealerns kortvärde: " + dealer.calculateScore();
+    console.log("Dealerns hand: " + dealer.handCards)
+    console.log("Dealerns hand värde: " + dealer.calculateScore());
+    if (dealer.calculateScore() < 17) {
+        // Dra kort tills dealern har 17 eller mer
+        while (dealer.calculateScore() < 17) {
+            getDealerhand();
+            document.getElementById("dealer").innerText = "Dealerns kortvärde: " + dealer.calculateScore();
+            console.log("Dealerns hand: " + dealer.handCards)
+            console.log("Dealerns hand värde: " + dealer.calculateScore());
+        }
     }
+    if (dealer.calculateScore() > 21) {
+        document.getElementById("dealer").innerText = "Dealer bust! : " + dealer.calculateScore();
+        document.getElementById("dealer").style.color = "red";
+        let element = document.getElementById("stand")
+        element.disabled = true;
+    }
+        
+        
+        
     
-    
+});
 
+reset.addEventListener("click", () => {
+    location.reload();
 });

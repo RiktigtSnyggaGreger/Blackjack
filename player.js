@@ -27,17 +27,6 @@ export class Player {
             score -= 10;
             aces -= 1;
         }
-
-        if (score > 21) {
-        document.getElementById("nummer").innerText = "You lost got fat: " + score;
-        document.getElementById("nummer").style.color = "red";
-        let element = document.getElementById("get-number")
-        element.disabled = true;
-        }
-
-        
-        
-
         return score;
     }
 }
@@ -46,5 +35,6 @@ export class Dealer extends Player {
         super(handCards);
     }
     // Dealer funtioner
+    
     
 }
