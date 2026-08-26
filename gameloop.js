@@ -14,12 +14,42 @@ suits.forEach(function(suits) {
 });
 
 
+
+function checkWin() {
+    let playerScore = player.calculateScore();
+    let dealerScore = dealer.calculateScore();
+    if (playerScore > 21) {
+        nummerText.innerText = `Bust! (Värde: ${playerScore}) – Du förlorade!`;
+        nummerText.style.color = "red";
+        return;
+    }
+    // 3. Dealern fick över 21 (Bust)
+    if (dealerScore > 21) {
+        dealerText.innerText = `(Värde: ${dealerScore}) – Du vinner!`;
+        dealerText.style.color = "green";
+        return;
+    }
+    // 4. Vanliga poängjämförelser
+    if (playerScore > dealerScore) {
+        nummerText.innerText = `Du vinner! (${playerScore} mot ${dealerScore})`;
+        nummerText.style.color = "green";
+    } else if (dealerScore > playerScore) {
+        dealerText.innerText = `Dealern vinner! (${dealerScore} mot ${playerScore})`;
+        dealerText.style.color = "red";
+    } else {
+        nummerText.innerText = `Oavgjort Båda har ${playerScore}`;
+    }
+
+        
+}
+
+
 // Tar ett random kort från kortleken
 function drawCard(){
     let tempCard = Math.floor(Math.random() * deck.length);
     return deck.splice(tempCard, 1)[0];
 }
-
+// Samma dom drawCard fast för dealern
 function getDealerhand() {
     let card = drawCard();
     if (card) {
@@ -44,15 +74,15 @@ const stanna = document.getElementById("stand");
 const reset = document.getElementById("reset");
 
 document.getElementById("nummer").innerText = "Ditt kortvärde: " + player.calculateScore();
-document.getElementById("dealer").innerText = "Dealerns kortvärde: " + dealer.calculateScore();
+document.getElementById("dealer").innerText = "Dealerns kortvärde: " + dealer.handCards[0];
 
-// Knappen lägger till ett random kort till i spelarens hand och skrivs i konsolen
+// PLAAAYYEERRRRRR
 knapp.addEventListener("click", () => {
     let card = drawCard();
     if (card) {
             player.handCards.push(card);
             document.getElementById("nummer").innerText = "Ditt kortvärde: " + player.calculateScore();
-            document.getElementById("dealer").innerText = "Dealerns kortvärde: " + dealer.calculateScore();
+            
 
             console.log("Drog kort: " + card);
             console.log("Din hand: " + player.handCards)
@@ -65,12 +95,17 @@ knapp.addEventListener("click", () => {
                 document.getElementById("nummer").style.color = "red";
                 let element = document.getElementById("get-number")
                 element.disabled = true;
+                checkWin();
+                
+
             }
 
-    }
-})
 
-// Knapp som håller koll på dealern och avslutar spealresn tur
+
+    }
+});
+
+// DEALERRRRRR
 stanna.addEventListener("click", () => {
     
     document.getElementById("dealer").innerText = "Dealerns kortvärde: " + dealer.calculateScore();
@@ -85,16 +120,15 @@ stanna.addEventListener("click", () => {
             console.log("Dealerns hand värde: " + dealer.calculateScore());
         }
     }
+    checkWin();
     if (dealer.calculateScore() > 21) {
         document.getElementById("dealer").innerText = "Dealer bust! : " + dealer.calculateScore();
         document.getElementById("dealer").style.color = "red";
         let element = document.getElementById("stand")
         element.disabled = true;
+        
+        
     }
-        
-        
-        
-    
 });
 
 reset.addEventListener("click", () => {
