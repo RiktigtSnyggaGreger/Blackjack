@@ -41,12 +41,20 @@ console.log("Dealerns hand: ", dealer.handCards);
 console.log("Dealerns hand värde: ", dealer.calculateScore());
 
 const knapp = document.getElementById("get-number");
+
+const stanna = document.getElementById("stand");
+
+document.getElementById("nummer").innerText = "Ditt kortvärde: " + player.calculateScore();
+document.getElementById("dealer").innerText = "Dealerns kortvärde: " + dealer.calculateScore();
+
 // Knappen lägger till ett random kort till i spelarens hand och skrivs i konsolen
 knapp.addEventListener("click", () => {
     let card = drawCard();
     if (card) {
             player.handCards.push(card);
-    
+            document.getElementById("nummer").innerText = "Ditt kortvärde: " + player.calculateScore();
+            document.getElementById("dealer").innerText = "Dealerns kortvärde: " + dealer.calculateScore();
+
             console.log("Drog kort: " + card);
             console.log("Din hand: " + player.handCards)
             console.log("Din hand värde: " + player.calculateScore());
@@ -57,3 +65,19 @@ knapp.addEventListener("click", () => {
     }
 })
 
+
+
+
+
+
+stanna.addEventListener("click", () => {
+    if (getDealerhand()) {
+        document.getElementById("dealer").innerText = "Dealerns kortvärde: " + dealer.calculateScore();
+        console.log("Dealerns hand: " + dealer.handCards)
+        console.log("Dealerns hand värde: " + dealer.calculateScore());
+        
+    }
+    
+    
+
+});

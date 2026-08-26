@@ -9,7 +9,7 @@ export class Player {
         let aces = 0;
 
         this.handCards.forEach(card => {
-            // Hämtar det första värdet innan " of "
+            // Använder allt innan OF
             let value = card.split(" of ")[0];
 
             if (value === "A") {
@@ -22,27 +22,29 @@ export class Player {
             }
         });
 
-        // Om summan överstiger 21 och det finns ess, ändra ess från 11 till 1
+        // Om summan överstiger 21 och det finns ess, ändra ess från 11 till 1, basic reglerrrr
         while (score > 21 && aces > 0) {
             score -= 10;
             aces -= 1;
         }
 
         if (score > 21) {
-        console.log("You Got Fat!");
+        document.getElementById("nummer").innerText = "You lost got fat: " + score;
+        document.getElementById("nummer").style.color = "red";
+        let element = document.getElementById("get-number")
+        element.disabled = true;
         }
+
         
         
 
         return score;
     }
-
-    
-
 }
 export class Dealer extends Player {
     constructor(handCards = []) {
         super(handCards);
     }
     // Dealer funtioner
+    
 }
