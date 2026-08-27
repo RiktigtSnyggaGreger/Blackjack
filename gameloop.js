@@ -13,6 +13,48 @@ suits.forEach(function(suits) {
   });
 });
 
+function getCardImg(card) {
+    const [value, suit] = card.split(" of ");
+
+    const suitCode = {
+        diamonds: "H",
+        spades: "S",
+        hearts: "C",
+        clubs: "D"
+    }[suit];
+
+    return `./cards/${suitCode}${value}.png`;
+}
+
+
+function renderHand() {
+    // Spakar variabler och ränsar dem
+    const handElement = document.getElementById("player-hand");
+    const dealerHandElement = document.getElementById("dealer-hand");
+    dealerHandElement.innerHTML = "";
+    handElement.innerHTML = "";
+    // Lägger till kortbilder för spelarens hand
+    player.handCards.forEach(card => {
+        const image = document.createElement("img");
+        image.src = getCardImg(card);
+        image.alt = card;
+        image.width = 100;
+
+        handElement.appendChild(image);
+    });
+
+    // Lägger till kortbilder för dealerns hand
+    dealer.handCards.forEach(card => {
+        
+        const image = document.createElement("img");
+        image.src = getCardImg(card);
+        image.alt = card;
+        image.width = 100;
+    
+        dealerHandElement.appendChild(image);
+    });
+}
+
 
 // Kollar vem som vinner
 function checkWin() {
@@ -76,11 +118,15 @@ const reset = document.getElementById("reset");
 document.getElementById("nummer").innerText = "Ditt kortvärde: " + player.calculateScore();
 document.getElementById("dealer").innerText = "Dealerns kortvärde: " + dealer.handCards[0];
 
+renderHand(player.handCards, "player-hand");
+renderHand(dealer.handCards, "dealer-hand");
+
 // PLAAAYYEERRRRRR
 knapp.addEventListener("click", () => {
     let card = drawCard();
     if (card) {
             player.handCards.push(card);
+            renderHand();
             document.getElementById("nummer").innerText = "Ditt kortvärde: " + player.calculateScore();
             
 
@@ -96,8 +142,6 @@ knapp.addEventListener("click", () => {
                 let element = document.getElementById("get-number")
                 element.disabled = true;
                 checkWin();
-                
-
             }
 
 
@@ -127,8 +171,8 @@ stanna.addEventListener("click", () => {
         let element = document.getElementById("stand")
         element.disabled = true;
         
-        
     }
+    renderHand(dealer.handCards, "dealer-hand");
 });
 
 reset.addEventListener("click", () => {
