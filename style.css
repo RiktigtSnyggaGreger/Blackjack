@@ -6,7 +6,7 @@ h1 {
 body {
     font-family: 'Plus Jakarta Sans', sans-serif;
     text-align: center;
-    zoom: 1.45;
+    zoom: 1.15;
 }
 
 button {
@@ -19,6 +19,7 @@ button {
     border-radius: 15px;
     border: 5px solid darkgreen;
 }
+
 
 h1 {
     display: flex;

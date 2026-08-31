@@ -2,6 +2,7 @@ import {Player, Dealer } from "./player.js";
 let player = new Player([]);
 let dealer = new Dealer([]);
 let money = 1000;
+let currentBet = 0;
 
 // Skapa en kortlek
 var deck = [];
@@ -13,7 +14,6 @@ suits.forEach(function(suits) {
     deck.push(`${value} of ${suits}`);
   });
 });
-
 function startaNyRunda() {
     player = new Player([]);
     dealer = new Dealer([]);
@@ -28,13 +28,14 @@ function startaNyRunda() {
 
     player.handCards.push(drawCard());
     player.handCards.push(drawCard());
+
     getDealerhand();
 
     document.getElementById("nummer").innerText =
         "Ditt kortvärde: " + player.calculateScore();
 
     document.getElementById("dealer").innerText =
-        "Dealerns kortvärde: " + dealer.handCards[0];
+        "Dealerns kortvärde: " + dealer.calculateScore();
 
     document.getElementById("nummerText").innerText = "";
     document.getElementById("dealerText").innerText = "";
@@ -97,7 +98,7 @@ function checkWin() {
     if (playerScore > 21) {
         nummerText.innerText = `Bust! (Värde: ${playerScore}) Du förlorade!`;
         nummerText.style.color = "red";
-        money -= 100;
+        money -= currentBet;
         document.getElementById("money").innerText = `Pengar: ${money} kr`;
         return;
     }
@@ -105,7 +106,7 @@ function checkWin() {
     if (dealerScore > 21) {
         dealerText.innerText = `(Värde: ${dealerScore}) Du vinner!`;
         dealerText.style.color = "green";
-        money += 100;
+        money += currentBet;
         document.getElementById("money").innerText = `Pengar: ${money} kr`;
         document.getElementById("stand").disabled = true;
         return;
@@ -114,13 +115,13 @@ function checkWin() {
     if (playerScore > dealerScore) {
         nummerText.innerText = `Du vinner! (${playerScore} mot ${dealerScore})`;
         nummerText.style.color = "green";
-        money += 100;
+        money += currentBet;
         document.getElementById("money").innerText = `Pengar: ${money} kr`;
         document.getElementById("stand").disabled = true;
     } else if (dealerScore > playerScore) {
         dealerText.innerText = `Dealern vinner! (${dealerScore} mot ${playerScore})`;
         dealerText.style.color = "red";
-        money -= 100;
+        money -= currentBet;
         document.getElementById("money").innerText = `Pengar: ${money} kr`;
         document.getElementById("stand").disabled = true;
     } else {
@@ -160,9 +161,13 @@ document.getElementById("money").innerText = `Pengar: ${money} kr`;
 const knapp = document.getElementById("get-number");
 const stanna = document.getElementById("stand");
 const reset = document.getElementById("reset");
-
+const currentBetElement = document.getElementById("currentBet");
+const bet100 = document.getElementById("bet100");
+const bet500 = document.getElementById("bet500");
+const bet250 = document.getElementById("bet250");
+const bet1000 = document.getElementById("bet1000");
 document.getElementById("nummer").innerText = "Ditt kortvärde: " + player.calculateScore();
-document.getElementById("dealer").innerText = "Dealerns kortvärde: " + dealer.handCards[0];
+document.getElementById("dealer").innerText = "Dealerns kortvärde: " + dealer.calculateScore();
 
 renderHand(player.handCards, "player-hand");
 renderHand(dealer.handCards, "dealer-hand");
@@ -227,4 +232,23 @@ stanna.addEventListener("click", () => {
 
 reset.addEventListener("click", () => {
     startaNyRunda();
+});
+
+// OLIKA BETS
+bet500.addEventListener("click", () => {
+    currentBet = 500;
+    currentBetElement.innerText = `Nuvarande insats: ${currentBet} kr`;
+});
+bet100.addEventListener("click", () => {
+    currentBet = 100;
+    currentBetElement.innerText = `Nuvarande insats: ${currentBet} kr`;
+});
+bet250.addEventListener("click", () => {
+    currentBet = 250;
+    currentBetElement.innerText = `Nuvarande insats: ${currentBet} kr`;
+});
+
+bet1000.addEventListener("click", () => {
+    currentBet = 1000;
+    currentBetElement.innerText = `Nuvarande insats: ${currentBet} kr`;
 });
