@@ -1,6 +1,7 @@
 import {Player, Dealer } from "./player.js";
 let player = new Player([]);
 let dealer = new Dealer([]);
+let money = 1000;
 
 // Skapa en kortlek
 var deck = [];
@@ -12,6 +13,38 @@ suits.forEach(function(suits) {
     deck.push(`${value} of ${suits}`);
   });
 });
+
+function startaNyRunda() {
+    player = new Player([]);
+    dealer = new Dealer([]);
+
+    deck = [];
+
+    suits.forEach(suit => {
+        values.forEach(value => {
+            deck.push(`${value} of ${suit}`);
+        });
+    });
+
+    player.handCards.push(drawCard());
+    player.handCards.push(drawCard());
+    getDealerhand();
+
+    document.getElementById("nummer").innerText =
+        "Ditt kortvärde: " + player.calculateScore();
+
+    document.getElementById("dealer").innerText =
+        "Dealerns kortvärde: " + dealer.handCards[0];
+
+    document.getElementById("nummerText").innerText = "";
+    document.getElementById("dealerText").innerText = "";
+
+    knapp.disabled = false;
+    stanna.disabled = false;
+
+    renderHand();
+}
+
 
 // Hämta bild för ett kort
 function getCardImg(card) {
@@ -64,23 +97,36 @@ function checkWin() {
     if (playerScore > 21) {
         nummerText.innerText = `Bust! (Värde: ${playerScore}) Du förlorade!`;
         nummerText.style.color = "red";
+        money -= 100;
+        document.getElementById("money").innerText = `Pengar: ${money} kr`;
         return;
     }
      
     if (dealerScore > 21) {
         dealerText.innerText = `(Värde: ${dealerScore}) Du vinner!`;
         dealerText.style.color = "green";
+        money += 100;
+        document.getElementById("money").innerText = `Pengar: ${money} kr`;
+        document.getElementById("stand").disabled = true;
         return;
     }
 
     if (playerScore > dealerScore) {
         nummerText.innerText = `Du vinner! (${playerScore} mot ${dealerScore})`;
         nummerText.style.color = "green";
+        money += 100;
+        document.getElementById("money").innerText = `Pengar: ${money} kr`;
+        document.getElementById("stand").disabled = true;
     } else if (dealerScore > playerScore) {
         dealerText.innerText = `Dealern vinner! (${dealerScore} mot ${playerScore})`;
         dealerText.style.color = "red";
+        money -= 100;
+        document.getElementById("money").innerText = `Pengar: ${money} kr`;
+        document.getElementById("stand").disabled = true;
     } else {
         nummerText.innerText = `Oavgjort Båda har ${playerScore}`;
+        document.getElementById("money").innerText = `Pengar: ${money} kr`;
+        document.getElementById("stand").disabled = true;
     }
 
         
@@ -109,7 +155,7 @@ console.log("Din hand värde: ", player.calculateScore());
 getDealerhand();
 console.log("Dealerns hand: ", dealer.handCards);
 console.log("Dealerns hand värde: ", dealer.calculateScore());
-
+document.getElementById("money").innerText = `Pengar: ${money} kr`;
 
 const knapp = document.getElementById("get-number");
 const stanna = document.getElementById("stand");
@@ -138,13 +184,13 @@ knapp.addEventListener("click", () => {
 
             if (player.calculateScore() > 21) {
                 document.getElementById("nummer").innerText = "Bust! : " + player.calculateScore();
-                document.getElementById("nummer").style.color = "red";
                 let element = document.getElementById("get-number")
                 element.disabled = true;
+                document.getElementById("stand").disabled = true;
                 checkWin();
+                console.log("Money: " + money);
+                document.getElementById("money").innerText = `Pengar: ${money} kr`;
             }
-
-
 
     }
 });
@@ -167,7 +213,6 @@ stanna.addEventListener("click", () => {
     checkWin();
     if (dealer.calculateScore() > 21) {
         document.getElementById("dealer").innerText = "Dealer bust! : " + dealer.calculateScore();
-        document.getElementById("dealer").style.color = "red";
         let element1 = document.getElementById("stand")
         element1.disabled = true;
         
@@ -175,8 +220,11 @@ stanna.addEventListener("click", () => {
     renderHand(dealer.handCards, "dealer-hand");
     let element2 = document.getElementById("get-number");
     element2.disabled = true;
+    console.log("Money: " + money);
+    document.getElementById("money").innerText = `Pengar: ${money} kr`;
+
 });
 
 reset.addEventListener("click", () => {
-    location.reload();
+    startaNyRunda();
 });
