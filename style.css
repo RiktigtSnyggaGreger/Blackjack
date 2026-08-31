@@ -11,13 +11,35 @@ body {
 
 button {
     color: white;
-    background-color: rgb(72, 102, 39);
+    background-color: rgb(1, 7, 61);
     border: none;
     padding: 10px 20px;
     margin: 10px;
     cursor: pointer;
     border-radius: 15px;
-    border: 5px solid darkgreen;
+    border: 5px solid darkblue;
+}
+
+
+button:hover {
+    background-color: darkblue;
+    border: 5px solid darkblue;
+}
+
+#bet100, #bet250, #bet500, #bet1000 {
+    background-color: rgb(1, 7, 61);
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    cursor: pointer;
+    border-radius: 100px;
+    border: 5px solid darkblue;
+    
+}
+
+#bet100:hover, #bet250:hover, #bet500:hover, #bet1000:hover {
+    background-color: darkblue;
+    border: 5px solid darkblue  ;
 }
 
 
@@ -33,6 +55,6 @@ div {
 }
 
 body {
-    background-image: url('9999520.jpg');
+    background-image: url('10081449.jpg');
 }
 
