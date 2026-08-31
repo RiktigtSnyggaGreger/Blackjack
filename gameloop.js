@@ -13,6 +13,7 @@ suits.forEach(function(suits) {
   });
 });
 
+// Hämta bild för ett kort
 function getCardImg(card) {
     const [value, suit] = card.split(" of ");
 
@@ -26,7 +27,7 @@ function getCardImg(card) {
     return `./cards/${suitCode}${value}.png`;
 }
 
-
+// Lägger till alla kort på bilden!
 function renderHand() {
     // Spakar variabler och ränsar dem
     const handElement = document.getElementById("player-hand");
@@ -106,7 +107,6 @@ player.handCards.push(drawCard());
 console.log("Din hand: ", player.handCards);
 console.log("Din hand värde: ", player.calculateScore());
 getDealerhand();
-getDealerhand();
 console.log("Dealerns hand: ", dealer.handCards);
 console.log("Dealerns hand värde: ", dealer.calculateScore());
 
@@ -156,7 +156,7 @@ stanna.addEventListener("click", () => {
     console.log("Dealerns hand: " + dealer.handCards)
     console.log("Dealerns hand värde: " + dealer.calculateScore());
     if (dealer.calculateScore() < 17) {
-        // Dra kort tills dealern har 17 eller mer
+        // Dra kort tills dealern har mer än
         while (dealer.calculateScore() < 17) {
             getDealerhand();
             document.getElementById("dealer").innerText = "Dealerns kortvärde: " + dealer.calculateScore();
@@ -168,11 +168,13 @@ stanna.addEventListener("click", () => {
     if (dealer.calculateScore() > 21) {
         document.getElementById("dealer").innerText = "Dealer bust! : " + dealer.calculateScore();
         document.getElementById("dealer").style.color = "red";
-        let element = document.getElementById("stand")
-        element.disabled = true;
+        let element1 = document.getElementById("stand")
+        element1.disabled = true;
         
     }
     renderHand(dealer.handCards, "dealer-hand");
+    let element2 = document.getElementById("get-number");
+    element2.disabled = true;
 });
 
 reset.addEventListener("click", () => {

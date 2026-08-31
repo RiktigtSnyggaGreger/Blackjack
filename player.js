@@ -38,3 +38,6 @@ export class Dealer extends Player {
     
     
 }
+
+//Gustav här: Penis
+//Om detta inte är borta betyder det att edwin inte tittat på koden ännu
