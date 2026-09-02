@@ -8,36 +8,63 @@
     <script type="module" src="gameloop.js" defer></script>
 </head>
 <body>
+    <div class="start-screen" id="start-screen">
+        <button id="EXIT" type="button">
+            <img src="exit.png" alt="Avsluta spel">
+        </button>
+        <h1>Black Jack</h1>
+        <h1 id="startMoney"></h1>
 
-    <h1 id="dealer"></h1>
-    <div id="dealer-hand"></div>
-    <!-- Dealer eller Player text win -->
-    <h1 id="nummerText"></h1>
-    <h1 id="dealerText"></h1>
+        <h1 id="currentBet">Nuvarande insats: 0 kr</h1>
+        <h1 id="betERROR"></h1>
+        <div class="bet-container">
+            <button id="bet100" type="button">
+                <img src="/chips/bet100.png" alt="Satsa 100 kr">
+            </button>
+            <button id="bet250" type="button">
+                <img src="/chips/bet250.png" alt="Satsa 250 kr">
+            </button>
+            <button id="bet500" type="button">
+                <img src="/chips/bet500.png" alt="Satsa 500 kr">
+            </button>
+            <button id="bet1000" type="button">
+                <img src="/chips/bet1000.png" alt="Satsa 1000 kr">
+            </button>
+            <button id="resetBet" type="button">
+                <img src="reset.png" alt="Återställ insats">
+            </button>
 
-    <h1 id="nummer"></h1>
-    <div id="player-hand"></div>
-    <button id="get-number">Få ett kort</button>
-    <button id="stand">Stanna</button>
-    <button id="reset">Reset</button>
-    <h1 id="money"></h1>
+        </div>
+        <button id="start-game">Starta spel</button>
+    </div>
 
-    <h1 id="currentBet"></h1>
+    <div class="game-container hidden" id="main-game">
 
-    <button id="bet100" type="button">
-        <img src="/chips/bet100.png" alt="Satsa 100 kr" width="50">
-    </button>
+        <div class="dealer-info">
+            <h1 id="dealer"></h1>
+        </div>
+        <div class="dealer-hand" id="dealer-hand"></div>
 
-    <button id="bet250" type="button">
-        <img src="/chips/bet250.png" alt="Satsa 250 kr" width="50">
-    </button>
 
-    <button id="bet500" type="button">
-        <img src="/chips/bet500.png" alt="Satsa 500 kr" width="50">
-    </button>
+        <div class="results">
+            <h1 id="nummerText"></h1>
+            <h1 id="dealerText"></h1>
+        </div>
 
-    <button id="bet1000" type="button">
-        <img src="/chips/bet1000.png" alt="Satsa 1000 kr" width="50">
-    </button>
+
+        <div class="player-info">
+            <h1 id="nummer"></h1>
+            <h1 id="money"></h1>
+            <h1 id="activeBet"></h1>
+        </div>
+        <div class="player-hand" id="player-hand"></div>
+
+
+        <div class="game-controls">
+            <button id="get-number">Få ett kort</button>
+            <button id="stand">Stanna</button>
+            <button id="reset">Reset bet</button>
+        </div>
+    </div>
 </body>
 </html>

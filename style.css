@@ -1,60 +1,188 @@
-h1 {
-    color: white;
-
-}
 
 body {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    text-align: center;
-    zoom: 1.15;
+    background-image: url('9999520.jpg');
+    background-size: cover;
+    min-height: 100vh;
+    padding: 20px;
 }
 
-button {
-    color: white;
-    background-color: rgb(1, 7, 61);
-    border: none;
-    padding: 10px 20px;
-    margin: 10px;
-    cursor: pointer;
+
+.game-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto auto auto auto auto auto;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    grid-template-areas:
+        ". dealer-info ."
+        "dealer-hand dealer-hand dealer-hand"
+        "results results results"
+        ". player-info ."
+        "player-hand player-hand player-hand"
+        "controls controls controls";
+}
+
+.game-container.hidden {
+    display: none;
+}
+
+
+.start-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    max-width: 500px;
+    margin: 60px auto;
+    padding: 30px;
+    background-color: rgba(0, 0, 0, 0.3);
     border-radius: 15px;
-    border: 5px solid darkblue;
+    border: 3px solid rgb(233, 218, 8);
+}
+
+.start-screen.hidden {
+    display: none;
+}
+
+#start-game {
+    margin-top: 10px;
 }
 
 
-button:hover {
-    background-color: darkblue;
-    border: 5px solid darkblue;
+.dealer-info {
+    grid-area: dealer-info;
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 3px solid rgb(233, 218, 8);
+    border-radius: 15px;
 }
 
-#bet100, #bet250, #bet500, #bet1000 {
-    background-color: rgb(1, 7, 61);
-    border: none;
-    padding: 10px 20px;
-    margin: 10px;
-    cursor: pointer;
-    border-radius: 100px;
-    border: 5px solid darkblue;
-    
-}
-
-#bet100:hover, #bet250:hover, #bet500:hover, #bet1000:hover {
-    background-color: darkblue;
-    border: 5px solid darkblue  ;
-}
-
-
-h1 {
+.dealer-hand {
+    grid-area: dealer-hand;
     display: flex;
     justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+
 }
 
-div {
+.results {
+    grid-area: results;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     gap: 10px;
 }
 
-body {
-    background-image: url('10081449.jpg');
+.player-info {
+    grid-area: player-info;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 3px solid rgb(233, 218, 8);
+    border-radius: 15px;
 }
 
+.player-hand {
+    grid-area: player-hand;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+
+}
+
+.game-controls {
+    grid-area: controls;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.betting-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+h1 {
+    color: rgb(233, 218, 8);
+    font-weight: 600;
+    font-size: 1.4em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+h3 {
+    color: rgb(233, 218, 8);
+    font-size: 1.2em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+button {
+    color: white;
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 12px 24px;
+    cursor: pointer;
+    border-radius: 12px;
+    border: 3px solid rgb(233, 218, 8);
+    font-weight: 600;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+button:hover {
+    background-color: rgb(22, 110, 60);
+    border-color: rgb(255, 240, 100);
+
+}
+
+button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Bet Buttons */
+#bet100, #bet250, #bet500, #bet1000, #resetBet {
+    background-color: rgb(16, 87, 48);
+    width: 80px;
+    height: 80px;
+    padding: 0;
+    border-radius: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#bet100 img, #bet250 img, #bet500 img, #bet1000 img, #resetBet img {
+    width: 70px;
+    height: 70px;
+}
+
+.bet-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+ #EXIT {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    margin-left: 90%;
+    width: 50px;
+    height: 50px;
+ }
+
+#EXIT img {
+    width: 50px;
+    height:50px;
+}

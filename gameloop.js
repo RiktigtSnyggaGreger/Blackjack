@@ -14,7 +14,7 @@ suits.forEach(function(suits) {
     deck.push(`${value} of ${suits}`);
   });
 });
-function startaNyRunda() {
+function newRound() {
     player = new Player([]);
     dealer = new Dealer([]);
 
@@ -61,6 +61,7 @@ function getCardImg(card) {
     return `./cards/${suitCode}${value}.png`;
 }
 
+
 // Lägger till alla kort på bilden!
 function renderHand() {
     // Spakar variabler och ränsar dem
@@ -96,38 +97,43 @@ function checkWin() {
     let playerScore = player.calculateScore();
     let dealerScore = dealer.calculateScore();
     if (playerScore > 21) {
-        nummerText.innerText = `Bust! (Värde: ${playerScore}) Du förlorade!`;
+        nummerText.innerText = `Du förlorade!`;
         nummerText.style.color = "red";
         money -= currentBet;
         document.getElementById("money").innerText = `Pengar: ${money} kr`;
+        document.getElementById("reset").style.backgroundColor = "red";
         return;
     }
      
     if (dealerScore > 21) {
-        dealerText.innerText = `(Värde: ${dealerScore}) Du vinner!`;
+        dealerText.innerText = `Du vinner!`;
         dealerText.style.color = "green";
         money += currentBet;
         document.getElementById("money").innerText = `Pengar: ${money} kr`;
         document.getElementById("stand").disabled = true;
+        document.getElementById("reset").style.backgroundColor = "green";
         return;
     }
 
     if (playerScore > dealerScore) {
-        nummerText.innerText = `Du vinner! (${playerScore} mot ${dealerScore})`;
+        nummerText.innerText = `Du vinner!`;
         nummerText.style.color = "green";
         money += currentBet;
         document.getElementById("money").innerText = `Pengar: ${money} kr`;
         document.getElementById("stand").disabled = true;
+        document.getElementById("reset").style.backgroundColor = "green";
     } else if (dealerScore > playerScore) {
-        dealerText.innerText = `Dealern vinner! (${dealerScore} mot ${playerScore})`;
+        dealerText.innerText = `Dealern vinner!`;
         dealerText.style.color = "red";
         money -= currentBet;
         document.getElementById("money").innerText = `Pengar: ${money} kr`;
         document.getElementById("stand").disabled = true;
+        document.getElementById("reset").style.backgroundColor = "red";
     } else {
-        nummerText.innerText = `Oavgjort Båda har ${playerScore}`;
+        nummerText.innerText = `Oavgjort!`;
         document.getElementById("money").innerText = `Pengar: ${money} kr`;
         document.getElementById("stand").disabled = true;
+        document.getElementById("reset").style.backgroundColor = "yellow";  
     }
 
         
@@ -148,15 +154,11 @@ function getDealerhand() {
     return card;
 }
 
-// Start kort
-player.handCards.push(drawCard());
-player.handCards.push(drawCard());
-console.log("Din hand: ", player.handCards);
-console.log("Din hand värde: ", player.calculateScore());
-getDealerhand();
-console.log("Dealerns hand: ", dealer.handCards);
-console.log("Dealerns hand värde: ", dealer.calculateScore());
-document.getElementById("money").innerText = `Pengar: ${money} kr`;
+const startScreen = document.getElementById("start-screen");
+const mainGame = document.getElementById("main-game");
+const startGameButton = document.getElementById("start-game");
+const startMoneyElement = document.getElementById("startMoney");
+const activeBetElement = document.getElementById("activeBet");
 
 const knapp = document.getElementById("get-number");
 const stanna = document.getElementById("stand");
@@ -166,11 +168,44 @@ const bet100 = document.getElementById("bet100");
 const bet500 = document.getElementById("bet500");
 const bet250 = document.getElementById("bet250");
 const bet1000 = document.getElementById("bet1000");
-document.getElementById("nummer").innerText = "Ditt kortvärde: " + player.calculateScore();
-document.getElementById("dealer").innerText = "Dealerns kortvärde: " + dealer.calculateScore();
+const resetBet = document.getElementById("resetBet");
+const exitButton = document.getElementById("EXIT");
 
-renderHand(player.handCards, "player-hand");
-renderHand(dealer.handCards, "dealer-hand");
+startMoneyElement.innerText = `Pengar: ${money} kr`;
+
+
+function ShowBetScreen() {
+    mainGame.classList.add("hidden");
+    startScreen.classList.remove("hidden");
+    currentBet = 0;
+    currentBetElement.innerText = `Nuvarande insats: ${currentBet} kr`;
+    startMoneyElement.innerText = `Pengar: ${money} kr`;
+    knapp.disabled = false;
+    stanna.disabled = false;
+}
+
+startGameButton.addEventListener("click", () => {
+    if (currentBet <= 0) {
+        document.getElementById("betERROR").innerText = "Du måste satsa pengar innan du kan starta spelet!";
+        return;
+    }
+    startScreen.classList.add("hidden");
+    mainGame.classList.remove("hidden");
+    activeBetElement.innerText = `Nuvarande insats: ${currentBet} kr`;
+    reset.style.backgroundColor = "";
+    newRound();
+});
+
+
+function placeBet(amount) {
+    if (currentBet + amount > money) {
+        document.getElementById("betERROR").innerText = "BITCH! Du kan inte satsa mer pengar än vad du har!";
+        return;
+    }
+    currentBet += amount;
+    currentBetElement.innerText = `Nuvarande insats: ${currentBet} kr`;
+}
+
 
 // PLAAAYYEERRRRRR
 knapp.addEventListener("click", () => {
@@ -227,28 +262,38 @@ stanna.addEventListener("click", () => {
     element2.disabled = true;
     console.log("Money: " + money);
     document.getElementById("money").innerText = `Pengar: ${money} kr`;
+    
 
 });
 
 reset.addEventListener("click", () => {
-    startaNyRunda();
+    ShowBetScreen();
 });
+// LAG FUNKTION SOM FUNGERAR SKIIIT BRA
+exitButton.addEventListener("click", () => {
+    money = 1000;
+    document.getElementById("startMoney").innerText = `Pengar: ${money} kr`;
+});
+
 
 // OLIKA BETS
 bet500.addEventListener("click", () => {
-    currentBet = 500;
-    currentBetElement.innerText = `Nuvarande insats: ${currentBet} kr`;
+    placeBet(500);
 });
 bet100.addEventListener("click", () => {
-    currentBet = 100;
-    currentBetElement.innerText = `Nuvarande insats: ${currentBet} kr`;
+    placeBet(100);
 });
 bet250.addEventListener("click", () => {
-    currentBet = 250;
-    currentBetElement.innerText = `Nuvarande insats: ${currentBet} kr`;
+    placeBet(250);
 });
 
 bet1000.addEventListener("click", () => {
-    currentBet = 1000;
-    currentBetElement.innerText = `Nuvarande insats: ${currentBet} kr`;
+    placeBet(1000);
 });
+
+resetBet.addEventListener("click", () => {
+    currentBet = 0;
+    currentBetElement.innerText = `Nuvarande insats: ${currentBet} kr`;
+    document.getElementById("betERROR").innerText = "";
+});
+
