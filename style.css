@@ -146,7 +146,7 @@ button:active {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* Bet Buttons */
+
 #bet100, #bet250, #bet500, #bet1000, #resetBet {
     background-color: rgb(16, 87, 48);
     width: 80px;
