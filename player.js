@@ -34,11 +34,31 @@ export class Dealer extends Player {
     constructor(handCards = []) {
         super(handCards);
     }
-    // Dealer funtioner
     
     
 }
 
-//Gustav här: Penis
-//Om detta inte är borta betyder det att edwin inte tittat på koden ännu
-// Edwin har kollat <3
+export class Deck {
+    constructor() {
+        this.cards = [];
+        this.reset();
+    }
+
+    reset() {
+        this.cards = [];
+        var suits = ["diamonds", "spades", "hearts", "clubs"];
+        var values = ["A", 2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K"];
+
+        suits.forEach(suit => {
+            values.forEach(value => {
+                this.cards.push(`${value} of ${suit}`);
+            });
+        });
+    }
+
+    drawCard() {
+        const randomIndex = Math.floor(Math.random() * this.cards.length);
+        return this.cards.splice(randomIndex, 1)[0];
+    }
+}
+
